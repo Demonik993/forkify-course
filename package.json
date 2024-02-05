@@ -1,0 +1,25 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Recipes from API",
+  "main": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Demonik993/forkify-course.git"
+  },
+  "author": "Dominik W.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Demonik993/forkify-course/issues"
+  },
+  "homepage": "https://github.com/Demonik993/forkify-course#readme",
+  
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5",
+    "sass": "^1.70.0"
+  }
+}
