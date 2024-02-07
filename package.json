@@ -17,9 +17,12 @@
     "url": "https://github.com/Demonik993/forkify-course/issues"
   },
   "homepage": "https://github.com/Demonik993/forkify-course#readme",
-  
   "devDependencies": {
     "parcel-bundler": "^1.12.5",
     "sass": "^1.70.0"
+  },
+  "dependencies": {
+    "core-js": "^3.35.1",
+    "regenerator-runtime": "^0.14.1"
   }
 }

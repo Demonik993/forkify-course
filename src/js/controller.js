@@ -1,4 +1,6 @@
 import icons from '../img/icons.svg';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 // import icons from 'url:../img/icons.svg'; // nie działa dla parcel bundler 1.
 
 const recipeContainer = document.querySelector('.recipe');
