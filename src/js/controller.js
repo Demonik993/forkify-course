@@ -28,8 +28,11 @@ const spinner = function (parentElement) {
   parentElement.insertAdjacentHTML('beforeend', html);
 };
 
-const showRecipe = async function (key) {
+const showRecipe = async function () {
   try {
+    const key = window.location.hash.slice(1);
+    console.log(key);
+
     //show spinner
     spinner(recipeContainer);
     // Load data
@@ -155,6 +158,11 @@ const showRecipe = async function (key) {
   }
 };
 
-showRecipe(`5ed6604591c37cdc054bc886`);
+// showRecipe(`5ed6604591c37cdc054bc886`);
 // showRecipe('5ed6604591c37cdc054bca10');
-// showRecipe(`5e054bc886`);
+// showRecipe(`5e054bc886`); // to make error
+// window.addEventListener('hashchange', showRecipe);
+// window.addEventListener('load', showRecipe);
+['hashchange', 'load'].forEach(event =>
+  window.addEventListener(event, showRecipe)
+);

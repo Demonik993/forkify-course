@@ -17335,29 +17335,32 @@ var spinner = function spinner(parentElement) {
   parentElement.insertAdjacentHTML('beforeend', html);
 };
 var showRecipe = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(key) {
-    var res, data, recipe, html;
+  var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+    var key, res, data, recipe, html;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
           _context.prev = 0;
+          key = window.location.hash.slice(1);
+          console.log(key);
+
           //show spinner
           spinner(recipeContainer);
           // Load data
-          _context.next = 4;
+          _context.next = 6;
           return fetch("https://forkify-api.herokuapp.com/api/v2/recipes/".concat(key));
-        case 4:
+        case 6:
           res = _context.sent;
-          _context.next = 7;
+          _context.next = 9;
           return res.json();
-        case 7:
+        case 9:
           data = _context.sent;
           if (res.ok) {
-            _context.next = 10;
+            _context.next = 12;
             break;
           }
           throw new Error("".concat(data.message, " (").concat(res.status, ")"));
-        case 10:
+        case 12:
           recipe = data.data.recipe;
           recipe = {
             id: recipe.id,
@@ -17375,25 +17378,31 @@ var showRecipe = /*#__PURE__*/function () {
           }).join(' '), "\n        </ul>\n        </div>\n      <div class=\"recipe__directions\">\n        <h2 class=\"heading--2\">How to cook it</h2>\n        <p class=\"recipe__directions-text\">\n          This recipe was carefully designed and tested by\n          <span class=\"recipe__publisher\">").concat(recipe.publisher, "</span>. Please check out\n          directions at their website.\n        </p>\n        <a\n          class=\"btn--small recipe__btn\"\n          href=").concat(recipe.sourceUrl, "\n          target=\"_blank\"\n        >\n          <span>Directions</span>\n          <svg class=\"search__icon\">\n            <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n          </svg>\n        </a>\n      </div>\n  ");
           recipeContainer.innerHTML = '';
           recipeContainer.insertAdjacentHTML('beforeend', html);
-          _context.next = 20;
+          _context.next = 22;
           break;
-        case 17:
-          _context.prev = 17;
+        case 19:
+          _context.prev = 19;
           _context.t0 = _context["catch"](0);
           alert(_context.t0);
-        case 20:
+        case 22:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 17]]);
+    }, _callee, null, [[0, 19]]);
   }));
-  return function showRecipe(_x) {
+  return function showRecipe() {
     return _ref.apply(this, arguments);
   };
 }();
-showRecipe("5ed6604591c37cdc054bc886");
+
+// showRecipe(`5ed6604591c37cdc054bc886`);
 // showRecipe('5ed6604591c37cdc054bca10');
-// showRecipe(`5e054bc886`);
+// showRecipe(`5e054bc886`); // to make error
+// window.addEventListener('hashchange', showRecipe);
+// window.addEventListener('load', showRecipe);
+['hashchange', 'load'].forEach(function (event) {
+  return window.addEventListener(event, showRecipe);
+});
 },{"../img/icons.svg":"src/img/icons.svg","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
