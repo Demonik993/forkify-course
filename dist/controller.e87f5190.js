@@ -665,6 +665,13 @@ var RecipeView = /*#__PURE__*/function () {
       _classPrivateMethodGet(this, _clear, _clear2).call(this);
       _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', html);
     }
+  }, {
+    key: "addHendlerRender",
+    value: function addHendlerRender(handler) {
+      ['hashchange', 'load'].forEach(function (event) {
+        return window.addEventListener(event, handler);
+      });
+    }
   }]);
   return RecipeView;
 }();
@@ -17868,7 +17875,6 @@ try {
 
 var model = _interopRequireWildcard(require("./model.js"));
 var _recepieView = _interopRequireDefault(require("./views/recepieView.js"));
-var _icons = _interopRequireDefault(require("../img/icons.svg"));
 require("core-js/stable");
 require("regenerator-runtime/runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -17922,16 +17928,11 @@ var controlRecipes = /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }();
-
-// showRecipe(`5ed6604591c37cdc054bc886`);
-// showRecipe('5ed6604591c37cdc054bca10');
-// showRecipe(`5e054bc886`); // to make error
-// window.addEventListener('hashchange', showRecipe);
-// window.addEventListener('load', showRecipe);
-['hashchange', 'load'].forEach(function (event) {
-  return window.addEventListener(event, controlRecipes);
-});
-},{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","../img/icons.svg":"src/img/icons.svg","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+var init = function init() {
+  _recepieView.default.addHendlerRender(controlRecipes);
+};
+init();
+},{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -17956,7 +17957,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59088" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50458" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

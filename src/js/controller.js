@@ -1,7 +1,6 @@
 import * as model from './model.js';
 import recepieView from './views/recepieView.js';
 
-import icons from '../img/icons.svg';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 // import icons from 'url:../img/icons.svg'; // nie działa dla parcel bundler 1.
@@ -27,11 +26,7 @@ const controlRecipes = async function () {
   }
 };
 
-// showRecipe(`5ed6604591c37cdc054bc886`);
-// showRecipe('5ed6604591c37cdc054bca10');
-// showRecipe(`5e054bc886`); // to make error
-// window.addEventListener('hashchange', showRecipe);
-// window.addEventListener('load', showRecipe);
-['hashchange', 'load'].forEach(event =>
-  window.addEventListener(event, controlRecipes)
-);
+const init = function () {
+  recepieView.addHendlerRender(controlRecipes);
+};
+init();
