@@ -22,7 +22,7 @@ const controlRecipes = async function () {
     // Inner HTML
     recepieView.render(model.state.recipe);
   } catch (err) {
-    alert(err);
+    recepieView.renderError();
   }
 };
 

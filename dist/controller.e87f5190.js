@@ -219,13 +219,14 @@ var loadRecipe = exports.loadRecipe = /*#__PURE__*/function () {
             servings: recipe.servings,
             sourceUrl: recipe.source_url
           };
-          _context.next = 11;
+          _context.next = 12;
           break;
         case 8:
           _context.prev = 8;
           _context.t0 = _context["catch"](0);
           console.error("\uD83C\uDF89 ".concat(_context.t0));
-        case 11:
+          throw _context.t0;
+        case 12:
         case "end":
           return _context.stop();
       }
@@ -620,7 +621,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
 function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
@@ -634,6 +634,8 @@ function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!priva
 function _classApplyDescriptorSet(receiver, descriptor, value) { if (descriptor.set) { descriptor.set.call(receiver, value); } else { if (!descriptor.writable) { throw new TypeError("attempted to set read only private field"); } descriptor.value = value; } }
 var _parentElement = /*#__PURE__*/new WeakMap();
 var _data = /*#__PURE__*/new WeakMap();
+var _erroMessage = /*#__PURE__*/new WeakMap();
+var _message = /*#__PURE__*/new WeakMap();
 var _clear = /*#__PURE__*/new WeakSet();
 var _generateHTML = /*#__PURE__*/new WeakSet();
 var _generateIngHtml = /*#__PURE__*/new WeakSet();
@@ -651,10 +653,13 @@ var RecipeView = /*#__PURE__*/function () {
       writable: true,
       value: void 0
     });
-    _defineProperty(this, "spinner", function () {
-      var html = "\n    <div class=\"spinner\">\n            <svg>\n              <use href=\"".concat(_icons.default, "#icon-loader\"></use>\n            </svg>\n          </div>\n    ");
-      _classPrivateMethodGet(this, _clear, _clear2).call(this);
-      _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('beforeend', html);
+    _classPrivateFieldInitSpec(this, _erroMessage, {
+      writable: true,
+      value: 'The recipe was not found. Please try with another one!'
+    });
+    _classPrivateFieldInitSpec(this, _message, {
+      writable: true,
+      value: ''
     });
   }
   _createClass(RecipeView, [{
@@ -662,6 +667,29 @@ var RecipeView = /*#__PURE__*/function () {
     value: function render(data) {
       _classPrivateFieldSet(this, _data, data);
       var html = _classPrivateMethodGet(this, _generateHTML, _generateHTML2).call(this);
+      _classPrivateMethodGet(this, _clear, _clear2).call(this);
+      _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', html);
+    }
+  }, {
+    key: "spinner",
+    value: function spinner() {
+      var html = "\n    <div class=\"spinner\">\n            <svg>\n              <use href=\"".concat(_icons.default, "#icon-loader\"></use>\n            </svg>\n          </div>\n    ");
+      _classPrivateMethodGet(this, _clear, _clear2).call(this);
+      _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('beforeend', html);
+    }
+  }, {
+    key: "renderError",
+    value: function renderError() {
+      var errMessage = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _classPrivateFieldGet(this, _erroMessage);
+      var errDiv = "\n          <div class=\"error\">\n            <div>\n              <svg>\n                <use href=\"".concat(_icons.default, "#icon-alert-triangle\"></use>\n              </svg>\n            </div>\n            <p>").concat(errMessage, "</p>\n          </div>\n  ");
+      _classPrivateMethodGet(this, _clear, _clear2).call(this);
+      _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', errDiv);
+    }
+  }, {
+    key: "renderMessage",
+    value: function renderMessage() {
+      var message = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _classPrivateFieldGet(this, _message);
+      var html = "\n      <div class=\"recipe\">\n        <div class=\"message\">\n          <div>\n            <svg>\n              <use href=".concat(_icons.default, "#icon-smile\"></use>\n            </svg>\n          </div>\n          <p>").concat(message, "</p>\n        </div>\n");
       _classPrivateMethodGet(this, _clear, _clear2).call(this);
       _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', html);
     }
@@ -17917,7 +17945,7 @@ var controlRecipes = /*#__PURE__*/function () {
         case 10:
           _context.prev = 10;
           _context.t0 = _context["catch"](0);
-          alert(_context.t0);
+          _recepieView.default.renderError();
         case 13:
         case "end":
           return _context.stop();

@@ -23,5 +23,6 @@ export const loadRecipe = async function (key) {
     };
   } catch (err) {
     console.error(`🎉 ${err}`);
+    throw err;
   }
 };
