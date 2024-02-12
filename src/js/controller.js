@@ -26,6 +26,16 @@ const controlRecipes = async function () {
   }
 };
 
+const controlSearchResults = async function () {
+  try {
+    await model.loadSearchResults('pizza');
+    console.log(model.state.search.results);
+  } catch (err) {
+    recepieView.renderError();
+  }
+};
+controlSearchResults();
+
 const init = function () {
   recepieView.addHendlerRender(controlRecipes);
 };
