@@ -1,6 +1,7 @@
 import * as model from './model.js';
 import recepieView from './views/recepieView.js';
 import serchingView from './views/serchingView.js';
+import resultsView from './views/resultsView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -25,18 +26,21 @@ const controlRecipes = async function () {
 
 const controlSearchResults = async function () {
   try {
+    resultsView.spinner();
+    console.log(resultsView);
+
     // Get search query
     const query = serchingView.getQuery();
     if (!query) return;
     // load data
     await model.loadSearchResults(query);
 
-    console.log(model.state.search.results);
+    resultsView.render(model.state.search.results);
   } catch (err) {
     recepieView.renderError();
   }
 };
-controlSearchResults();
+// controlSearchResults();
 
 const init = function () {
   recepieView.addHendlerRender(controlRecipes);
