@@ -756,7 +756,60 @@ function _generateIngHtml2(ing) {
   return "\n    <li class=\"recipe__ingredient\">\n      <svg class=\"recipe__icon\">\n        <use href=\"".concat(_icons.default, "#icon-check\"></use>\n      </svg>\n      <div class=\"recipe__quantity\">").concat(ing.quantity ? new _fractional.Fraction(ing.quantity).toString() : '', "</div>\n      <div class=\"recipe__description\">\n        <span class=\"recipe__unit\">").concat(ing === null || ing === void 0 ? void 0 : ing.unit, "</span>\n        ").concat(ing.description, "\n      </div>\n    </li>\n    ");
 }
 var _default = exports.default = new RecipeView();
-},{"../../img/icons.svg":"src/img/icons.svg","fractional":"node_modules/fractional/index.js"}],"node_modules/core-js/internals/global.js":[function(require,module,exports) {
+},{"../../img/icons.svg":"src/img/icons.svg","fractional":"node_modules/fractional/index.js"}],"src/js/views/serchingView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _classPrivateMethodInitSpec(obj, privateSet) { _checkPrivateRedeclaration(obj, privateSet); privateSet.add(obj); }
+function _classPrivateFieldInitSpec(obj, privateMap, value) { _checkPrivateRedeclaration(obj, privateMap); privateMap.set(obj, value); }
+function _checkPrivateRedeclaration(obj, privateCollection) { if (privateCollection.has(obj)) { throw new TypeError("Cannot initialize the same private elements twice on an object"); } }
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+function _classPrivateFieldGet(receiver, privateMap) { var descriptor = _classExtractFieldDescriptor(receiver, privateMap, "get"); return _classApplyDescriptorGet(receiver, descriptor); }
+function _classExtractFieldDescriptor(receiver, privateMap, action) { if (!privateMap.has(receiver)) { throw new TypeError("attempted to " + action + " private field on non-instance"); } return privateMap.get(receiver); }
+function _classApplyDescriptorGet(receiver, descriptor) { if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+var _parentElement = /*#__PURE__*/new WeakMap();
+var _clearInput = /*#__PURE__*/new WeakSet();
+var SearchView = /*#__PURE__*/function () {
+  function SearchView() {
+    _classCallCheck(this, SearchView);
+    _classPrivateMethodInitSpec(this, _clearInput);
+    _classPrivateFieldInitSpec(this, _parentElement, {
+      writable: true,
+      value: document.querySelector('.search ')
+    });
+  }
+  _createClass(SearchView, [{
+    key: "getQuery",
+    value: function getQuery() {
+      var query = _classPrivateFieldGet(this, _parentElement).querySelector('.search__field').value;
+      _classPrivateMethodGet(this, _clearInput, _clearInput2).call(this);
+      return query;
+    }
+  }, {
+    key: "addHandlerSearch",
+    value: function addHandlerSearch(handler) {
+      _classPrivateFieldGet(this, _parentElement).addEventListener('submit', function (e) {
+        e.preventDefault();
+        handler();
+      });
+    }
+  }]);
+  return SearchView;
+}();
+function _clearInput2() {
+  _classPrivateFieldGet(this, _parentElement).querySelector('.search__field').value = '';
+}
+var _default = exports.default = new SearchView();
+},{}],"node_modules/core-js/internals/global.js":[function(require,module,exports) {
 var global = arguments[3];
 'use strict';
 var check = function (it) {
@@ -17946,6 +17999,7 @@ try {
 
 var model = _interopRequireWildcard(require("./model.js"));
 var _recepieView = _interopRequireDefault(require("./views/recepieView.js"));
+var _serchingView = _interopRequireDefault(require("./views/serchingView.js"));
 require("core-js/stable");
 require("regenerator-runtime/runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -17956,10 +18010,6 @@ function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyri
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 // import icons from 'url:../img/icons.svg'; // nie działa dla parcel bundler 1.
-
-// https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
 
 var controlRecipes = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
@@ -18001,25 +18051,34 @@ var controlRecipes = /*#__PURE__*/function () {
 }();
 var controlSearchResults = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    var query;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
           _context2.prev = 0;
-          _context2.next = 3;
-          return model.loadSearchResults('pizza');
-        case 3:
-          console.log(model.state.search.results);
-          _context2.next = 9;
-          break;
+          // Get search query
+          query = _serchingView.default.getQuery();
+          if (query) {
+            _context2.next = 4;
+            break;
+          }
+          return _context2.abrupt("return");
+        case 4:
+          _context2.next = 6;
+          return model.loadSearchResults(query);
         case 6:
-          _context2.prev = 6;
+          console.log(model.state.search.results);
+          _context2.next = 12;
+          break;
+        case 9:
+          _context2.prev = 9;
           _context2.t0 = _context2["catch"](0);
           _recepieView.default.renderError();
-        case 9:
+        case 12:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 6]]);
+    }, _callee2, null, [[0, 9]]);
   }));
   return function controlSearchResults() {
     return _ref2.apply(this, arguments);
@@ -18028,9 +18087,10 @@ var controlSearchResults = /*#__PURE__*/function () {
 controlSearchResults();
 var init = function init() {
   _recepieView.default.addHendlerRender(controlRecipes);
+  _serchingView.default.addHandlerSearch(controlSearchResults);
 };
 init();
-},{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","./views/serchingView.js":"src/js/views/serchingView.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -18055,7 +18115,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50458" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57580" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
