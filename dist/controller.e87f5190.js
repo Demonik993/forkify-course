@@ -123,9 +123,10 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.TIMEOUT_S = exports.API_URL = void 0;
+exports.TIMEOUT_S = exports.RES_PER_PAGE = exports.API_URL = void 0;
 var API_URL = exports.API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
 var TIMEOUT_S = exports.TIMEOUT_S = 10;
+var RES_PER_PAGE = exports.RES_PER_PAGE = 10;
 },{}],"src/js/helpers.js":[function(require,module,exports) {
 "use strict";
 
@@ -187,7 +188,7 @@ var getJSON = exports.getJSON = /*#__PURE__*/function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.state = exports.loadSearchResults = exports.loadRecipe = void 0;
+exports.state = exports.showSearchResults = exports.loadSearchResults = exports.loadRecipe = void 0;
 var _config = require("./config");
 var _helpers = require("./helpers");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -198,7 +199,9 @@ var state = exports.state = {
   recipe: {},
   search: {
     query: '',
-    results: []
+    results: [],
+    resultsPerPage: _config.RES_PER_PAGE,
+    page: 1
   }
 };
 var loadRecipe = exports.loadRecipe = /*#__PURE__*/function () {
@@ -278,6 +281,14 @@ var loadSearchResults = exports.loadSearchResults = /*#__PURE__*/function () {
     return _ref2.apply(this, arguments);
   };
 }();
+var showSearchResults = exports.showSearchResults = function showSearchResults() {
+  var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : state.search.page;
+  state.search.page = page;
+  var start = (page - 1) * state.search.resultsPerPage;
+  var end = page * state.search.resultsPerPage;
+  console.log(state.search.results);
+  return state.search.results.slice(start, end);
+};
 // loadSearchResults('pizza');
 },{"./config":"src/js/config.js","./helpers":"src/js/helpers.js"}],"src/img/icons.svg":[function(require,module,exports) {
 module.exports = "/icons.ae3c38d5.svg";
@@ -18135,7 +18146,7 @@ var controlSearchResults = /*#__PURE__*/function () {
           _context2.next = 8;
           return model.loadSearchResults(query);
         case 8:
-          _resultsView.default.render(model.state.search.results);
+          _resultsView.default.render(model.showSearchResults());
           _context2.next = 14;
           break;
         case 11:
