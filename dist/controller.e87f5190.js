@@ -286,7 +286,6 @@ var showSearchResults = exports.showSearchResults = function showSearchResults()
   state.search.page = page;
   var start = (page - 1) * state.search.resultsPerPage;
   var end = page * state.search.resultsPerPage;
-  console.log(state.search.results);
   return state.search.results.slice(start, end);
 };
 // loadSearchResults('pizza');
@@ -884,6 +883,73 @@ var ResultsView = /*#__PURE__*/function (_View) {
   return ResultsView;
 }(_view.default);
 var _default = exports.default = new ResultsView();
+},{"./view.js":"src/js/views/view.js","../../img/icons.svg":"src/img/icons.svg"}],"src/js/views/paginationView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _view = _interopRequireDefault(require("./view.js"));
+var _icons = _interopRequireDefault(require("../../img/icons.svg"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var PaginationView = /*#__PURE__*/function (_View) {
+  _inherits(PaginationView, _View);
+  function PaginationView() {
+    var _this;
+    _classCallCheck(this, PaginationView);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _callSuper(this, PaginationView, [].concat(args));
+    _defineProperty(_assertThisInitialized(_this), "_parentElement", document.querySelector('.pagination'));
+    return _this;
+  }
+  _createClass(PaginationView, [{
+    key: "_generateHTML",
+    value: function _generateHTML() {
+      var currentPage = this._data.page;
+      var numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
+      console.log('numPages:' + numPages);
+
+      // We are on the firt page and we have more pages
+      if (currentPage === 1 && numPages > 1) return this._nextButton(currentPage);
+      // We are on the firt page and we have no more pages
+      if (currentPage === 1 && numPages === 1) return '';
+      // We are on the last page
+      if (currentPage === numPages && numPages > 1) return this._prevButton(currentPage);
+
+      // We are on the other page
+      if (currentPage < numPages) return "  ".concat(this._prevButton(currentPage), "\n                ").concat(this._nextButton(currentPage), "\n                ");
+    }
+  }, {
+    key: "_nextButton",
+    value: function _nextButton(currentPage) {
+      return "\n    <button class=\"btn--inline pagination__btn--next\">\n                    <span>Page ".concat(currentPage + 1, "</span>\n                    <svg class=\"search__icon\">\n                    <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n                    </svg>\n                </button>\n    ");
+    }
+  }, {
+    key: "_prevButton",
+    value: function _prevButton(currentPage) {
+      return "\n    <button class=\"btn--inline pagination__btn--prev\">\n                    <svg class=\"search__icon\">\n                    <use href=\"".concat(_icons.default, "#icon-arrow-left\"></use>\n                    </svg>\n                    <span>Page ").concat(currentPage - 1, "</span>\n                </button>\n    ");
+    }
+  }]);
+  return PaginationView;
+}(_view.default);
+var _default = exports.default = new PaginationView();
 },{"./view.js":"src/js/views/view.js","../../img/icons.svg":"src/img/icons.svg"}],"node_modules/core-js/internals/global.js":[function(require,module,exports) {
 var global = arguments[3];
 'use strict';
@@ -18076,6 +18142,7 @@ var model = _interopRequireWildcard(require("./model.js"));
 var _recepieView = _interopRequireDefault(require("./views/recepieView.js"));
 var _serchingView = _interopRequireDefault(require("./views/serchingView.js"));
 var _resultsView = _interopRequireDefault(require("./views/resultsView.js"));
+var _paginationView = _interopRequireDefault(require("./views/paginationView.js"));
 require("core-js/stable");
 require("regenerator-runtime/runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -18146,18 +18213,22 @@ var controlSearchResults = /*#__PURE__*/function () {
           _context2.next = 8;
           return model.loadSearchResults(query);
         case 8:
-          _resultsView.default.render(model.showSearchResults());
-          _context2.next = 14;
+          //show results
+          _resultsView.default.render(model.showSearchResults(2));
+
+          //render pagination
+          _paginationView.default.render(model.state.search);
+          _context2.next = 15;
           break;
-        case 11:
-          _context2.prev = 11;
+        case 12:
+          _context2.prev = 12;
           _context2.t0 = _context2["catch"](0);
           _recepieView.default.renderError();
-        case 14:
+        case 15:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 11]]);
+    }, _callee2, null, [[0, 12]]);
   }));
   return function controlSearchResults() {
     return _ref2.apply(this, arguments);
@@ -18170,7 +18241,7 @@ var init = function init() {
   _serchingView.default.addHandlerSearch(controlSearchResults);
 };
 init();
-},{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","./views/serchingView.js":"src/js/views/serchingView.js","./views/resultsView.js":"src/js/views/resultsView.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","./views/serchingView.js":"src/js/views/serchingView.js","./views/resultsView.js":"src/js/views/resultsView.js","./views/paginationView.js":"src/js/views/paginationView.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

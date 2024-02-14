@@ -2,6 +2,7 @@ import * as model from './model.js';
 import recepieView from './views/recepieView.js';
 import serchingView from './views/serchingView.js';
 import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -34,8 +35,11 @@ const controlSearchResults = async function () {
     if (!query) return;
     // load data
     await model.loadSearchResults(query);
+    //show results
+    resultsView.render(model.showSearchResults(2));
 
-    resultsView.render(model.showSearchResults());
+    //render pagination
+    paginationView.render(model.state.search);
   } catch (err) {
     recepieView.renderError();
   }
