@@ -920,11 +920,20 @@ var PaginationView = /*#__PURE__*/function (_View) {
     return _this;
   }
   _createClass(PaginationView, [{
+    key: "addHandlerClick",
+    value: function addHandlerClick(handler) {
+      this._parentElement.addEventListener('click', function (e) {
+        var btn = e.target.closest('.btn--inline');
+        if (!btn) return;
+        var goTo = +btn.dataset.goto;
+        handler(goTo);
+      });
+    }
+  }, {
     key: "_generateHTML",
     value: function _generateHTML() {
       var currentPage = this._data.page;
       var numPages = Math.ceil(this._data.results.length / this._data.resultsPerPage);
-      console.log('numPages:' + numPages);
 
       // We are on the firt page and we have more pages
       if (currentPage === 1 && numPages > 1) return this._nextButton(currentPage);
@@ -939,12 +948,12 @@ var PaginationView = /*#__PURE__*/function (_View) {
   }, {
     key: "_nextButton",
     value: function _nextButton(currentPage) {
-      return "\n    <button class=\"btn--inline pagination__btn--next\">\n                    <span>Page ".concat(currentPage + 1, "</span>\n                    <svg class=\"search__icon\">\n                    <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n                    </svg>\n                </button>\n    ");
+      return "\n    <button data-goto=\"".concat(currentPage + 1, "\" class=\"btn--inline pagination__btn--next\">\n                    <span>Page ").concat(currentPage + 1, "</span>\n                    <svg class=\"search__icon\">\n                    <use href=\"").concat(_icons.default, "#icon-arrow-right\"></use>\n                    </svg>\n                </button>\n    ");
     }
   }, {
     key: "_prevButton",
     value: function _prevButton(currentPage) {
-      return "\n    <button class=\"btn--inline pagination__btn--prev\">\n                    <svg class=\"search__icon\">\n                    <use href=\"".concat(_icons.default, "#icon-arrow-left\"></use>\n                    </svg>\n                    <span>Page ").concat(currentPage - 1, "</span>\n                </button>\n    ");
+      return "\n    <button data-goto=\"".concat(currentPage - 1, "\" class=\"btn--inline pagination__btn--prev\">\n                    <svg class=\"search__icon\">\n                    <use href=\"").concat(_icons.default, "#icon-arrow-left\"></use>\n                    </svg>\n                    <span>Page ").concat(currentPage - 1, "</span>\n                </button>\n    ");
     }
   }]);
   return PaginationView;
@@ -18200,45 +18209,51 @@ var controlSearchResults = /*#__PURE__*/function () {
         case 0:
           _context2.prev = 0;
           _resultsView.default.spinner();
-          console.log(_resultsView.default);
 
           // Get search query
           query = _serchingView.default.getQuery();
           if (query) {
-            _context2.next = 6;
+            _context2.next = 5;
             break;
           }
           return _context2.abrupt("return");
-        case 6:
-          _context2.next = 8;
+        case 5:
+          _context2.next = 7;
           return model.loadSearchResults(query);
-        case 8:
+        case 7:
           //show results
-          _resultsView.default.render(model.showSearchResults(2));
+          _resultsView.default.render(model.showSearchResults());
 
           //render pagination
           _paginationView.default.render(model.state.search);
-          _context2.next = 15;
+          _context2.next = 14;
           break;
-        case 12:
-          _context2.prev = 12;
+        case 11:
+          _context2.prev = 11;
           _context2.t0 = _context2["catch"](0);
           _recepieView.default.renderError();
-        case 15:
+        case 14:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[0, 12]]);
+    }, _callee2, null, [[0, 11]]);
   }));
   return function controlSearchResults() {
     return _ref2.apply(this, arguments);
   };
 }();
 // controlSearchResults();
+var controlPagination = function controlPagination(goToPage) {
+  //show results
+  _resultsView.default.render(model.showSearchResults(goToPage));
 
+  //render pagination
+  _paginationView.default.render(model.state.search);
+};
 var init = function init() {
   _recepieView.default.addHendlerRender(controlRecipes);
   _serchingView.default.addHandlerSearch(controlSearchResults);
+  _paginationView.default.addHandlerClick(controlPagination);
 };
 init();
 },{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","./views/serchingView.js":"src/js/views/serchingView.js","./views/resultsView.js":"src/js/views/resultsView.js","./views/paginationView.js":"src/js/views/paginationView.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
