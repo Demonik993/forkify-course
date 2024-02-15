@@ -59,4 +59,11 @@ export const showSearchResults = function (page = state.search.page) {
 
   return state.search.results.slice(start, end);
 };
-// loadSearchResults('pizza');
+
+export const updateServings = function (numServings) {
+  state.recipe.ingredients.forEach(ing => {
+    if (!ing.quantity) return;
+    ing.quantity = (ing.quantity * numServings) / state.recipe.servings;
+  });
+  state.recipe.servings = numServings;
+};

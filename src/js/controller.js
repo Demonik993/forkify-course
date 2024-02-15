@@ -20,6 +20,8 @@ const controlRecipes = async function () {
     await model.loadRecipe(key);
     // Inner HTML
     recepieView.render(model.state.recipe);
+
+    // controlServings();
   } catch (err) {
     recepieView.renderError();
   }
@@ -51,9 +53,18 @@ const controlPagination = function (goToPage) {
   //render pagination
   paginationView.render(model.state.search);
 };
+
+const controlServings = function (servings) {
+  // Update recepie servings in state
+  model.updateServings(servings);
+  //update recepie View
+  recepieView.render(model.state.recipe);
+};
+
 const init = function () {
   recepieView.addHendlerRender(controlRecipes);
   serchingView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  recepieView.addHendlerServings(controlServings);
 };
 init();
