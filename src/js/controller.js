@@ -16,6 +16,8 @@ const controlRecipes = async function () {
 
     //show spinner
     recepieView.spinner();
+    //update results list to markuppage
+    resultsView.update(model.showSearchResults());
     // Load data
     await model.loadRecipe(key);
     // Inner HTML

@@ -330,7 +330,6 @@ var View = exports.default = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update(data) {
-      if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
       this._data = data;
       //GENERATE NEW DOM
       var newHtml = this._generateHTML();
@@ -919,8 +918,9 @@ var ResultsView = /*#__PURE__*/function (_View) {
   _createClass(ResultsView, [{
     key: "_generateHTML",
     value: function _generateHTML() {
+      var id = window.location.hash.slice(1);
       return this._data.map(function (rec) {
-        return "\n             <li class=\"preview\">\n                <a class=\"preview__link\" href=\"#".concat(rec.id, "\">\n                  <figure class=\"preview__fig\">\n                    <img src=\"").concat(rec.image, "\" alt=").concat(rec.title, " />\n                  </figure>\n                  <div class=\"preview__data\">\n                    <h4 class=\"preview__title\">").concat(rec.title, "</h4>\n                    <p class=\"preview__publisher\">").concat(rec.publisher, "n</p>\n                  </div>\n                </a>\n              </li>\n        ");
+        return "\n             <li class=\"preview\">\n                <a class=\"preview__link ".concat(rec.id === id ? 'preview__link--active' : '', "\" href=\"#").concat(rec.id, "\">\n                  <figure class=\"preview__fig\">\n                    <img src=\"").concat(rec.image, "\" alt=").concat(rec.title, " />\n                  </figure>\n                  <div class=\"preview__data\">\n                    <h4 class=\"preview__title\">").concat(rec.title, "</h4>\n                    <p class=\"preview__publisher\">").concat(rec.publisher, "n</p>\n                  </div>\n                </a>\n              </li>\n        ");
       }).join('');
     }
   }]);
@@ -18223,25 +18223,27 @@ var controlRecipes = /*#__PURE__*/function () {
         case 4:
           //show spinner
           _recepieView.default.spinner();
+          //update results list to markuppage
+          _resultsView.default.update(model.showSearchResults());
           // Load data
-          _context.next = 7;
+          _context.next = 8;
           return model.loadRecipe(key);
-        case 7:
+        case 8:
           // Inner HTML
           _recepieView.default.render(model.state.recipe);
 
           // controlServings();
-          _context.next = 13;
+          _context.next = 14;
           break;
-        case 10:
-          _context.prev = 10;
+        case 11:
+          _context.prev = 11;
           _context.t0 = _context["catch"](0);
           _recepieView.default.renderError();
-        case 13:
+        case 14:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 10]]);
+    }, _callee, null, [[0, 11]]);
   }));
   return function controlRecipes() {
     return _ref.apply(this, arguments);

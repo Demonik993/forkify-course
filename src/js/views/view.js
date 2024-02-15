@@ -12,8 +12,6 @@ export default class View {
   }
 
   update(data) {
-    if (!data || (Array.isArray(data) && data.length === 0))
-      return this.renderError();
     this._data = data;
     //GENERATE NEW DOM
     const newHtml = this._generateHTML();
