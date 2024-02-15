@@ -312,7 +312,7 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); } // import { concat } from 'core-js/core/array';
 var View = exports.default = /*#__PURE__*/function () {
   function View() {
     _classCallCheck(this, View);
@@ -326,6 +326,33 @@ var View = exports.default = /*#__PURE__*/function () {
       var html = this._generateHTML();
       this._clear();
       this._parentElement.insertAdjacentHTML('afterbegin', html);
+    }
+  }, {
+    key: "update",
+    value: function update(data) {
+      if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
+      this._data = data;
+      //GENERATE NEW DOM
+      var newHtml = this._generateHTML();
+      var newDom = document.createRange().createContextualFragment(newHtml);
+      var newElements = Array.from(newDom.querySelectorAll('*'));
+      //GENERATE OLD DOM
+      var oldDOM = Array.from(this._parentElement.querySelectorAll('*'));
+      //COMPARE NODES
+      newElements.forEach(function (newEL, i) {
+        var _newEL$firstChild;
+        var curEl = oldDOM[i];
+        //CHANGE TEXT
+        if (!newEL.isEqualNode(curEl) && ((_newEL$firstChild = newEL.firstChild) === null || _newEL$firstChild === void 0 ? void 0 : _newEL$firstChild.nodeValue.trim()) !== '') {
+          curEl.textContent = newEL.textContent;
+        }
+        //CHANGE ATTRIBUTES
+        if (!newEL.isEqualNode(curEl)) {
+          Array.from(newEL.attributes).forEach(function (attr) {
+            return curEl.setAttribute(attr.name, attr.value);
+          });
+        }
+      });
     }
   }, {
     key: "_clear",
@@ -18273,7 +18300,7 @@ var controlServings = function controlServings(servings) {
   // Update recepie servings in state
   model.updateServings(servings);
   //update recepie View
-  _recepieView.default.render(model.state.recipe);
+  _recepieView.default.update(model.state.recipe);
 };
 var init = function init() {
   _recepieView.default.addHendlerRender(controlRecipes);

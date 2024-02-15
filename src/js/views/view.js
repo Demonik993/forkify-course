@@ -1,3 +1,4 @@
+// import { concat } from 'core-js/core/array';
 import icons from '../../img/icons.svg';
 export default class View {
   _data;
@@ -8,6 +9,35 @@ export default class View {
     const html = this._generateHTML();
     this._clear();
     this._parentElement.insertAdjacentHTML('afterbegin', html);
+  }
+
+  update(data) {
+    if (!data || (Array.isArray(data) && data.length === 0))
+      return this.renderError();
+    this._data = data;
+    //GENERATE NEW DOM
+    const newHtml = this._generateHTML();
+    const newDom = document.createRange().createContextualFragment(newHtml);
+    const newElements = Array.from(newDom.querySelectorAll('*'));
+    //GENERATE OLD DOM
+    const oldDOM = Array.from(this._parentElement.querySelectorAll('*'));
+    //COMPARE NODES
+    newElements.forEach((newEL, i) => {
+      const curEl = oldDOM[i];
+      //CHANGE TEXT
+      if (
+        !newEL.isEqualNode(curEl) &&
+        newEL.firstChild?.nodeValue.trim() !== ''
+      ) {
+        curEl.textContent = newEL.textContent;
+      }
+      //CHANGE ATTRIBUTES
+      if (!newEL.isEqualNode(curEl)) {
+        Array.from(newEL.attributes).forEach(attr =>
+          curEl.setAttribute(attr.name, attr.value)
+        );
+      }
+    });
   }
   _clear() {
     this._parentElement.innerHTML = '';

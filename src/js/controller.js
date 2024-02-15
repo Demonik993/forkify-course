@@ -58,7 +58,7 @@ const controlServings = function (servings) {
   // Update recepie servings in state
   model.updateServings(servings);
   //update recepie View
-  recepieView.render(model.state.recipe);
+  recepieView.update(model.state.recipe);
 };
 
 const init = function () {
