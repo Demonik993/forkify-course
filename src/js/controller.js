@@ -63,10 +63,18 @@ const controlServings = function (servings) {
   recepieView.update(model.state.recipe);
 };
 
+const controlAddBookMarked = function () {
+  if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+  else model.removeBookmark(model.state.recipe.id);
+  recepieView.update(model.state.recipe);
+  console.log(model.state.bookmarks);
+};
+
 const init = function () {
   recepieView.addHendlerRender(controlRecipes);
+  recepieView.addHendlerServings(controlServings);
+  recepieView.addHandlerBookmark(controlAddBookMarked);
   serchingView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
-  recepieView.addHendlerServings(controlServings);
 };
 init();
