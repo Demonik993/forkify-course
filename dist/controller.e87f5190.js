@@ -1035,7 +1035,56 @@ var PaginationView = /*#__PURE__*/function (_View) {
   return PaginationView;
 }(_view.default);
 var _default = exports.default = new PaginationView();
-},{"./view.js":"src/js/views/view.js","../../img/icons.svg":"src/img/icons.svg"}],"node_modules/core-js/internals/global.js":[function(require,module,exports) {
+},{"./view.js":"src/js/views/view.js","../../img/icons.svg":"src/img/icons.svg"}],"src/js/views/bookmarkView.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _view = _interopRequireDefault(require("./view.js"));
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+function _isNativeReflectConstruct() { try { var t = !Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); } catch (t) {} return (_isNativeReflectConstruct = function _isNativeReflectConstruct() { return !!t; })(); }
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); Object.defineProperty(subClass, "prototype", { writable: false }); if (superClass) _setPrototypeOf(subClass, superClass); }
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+var BookmarksView = /*#__PURE__*/function (_View) {
+  _inherits(BookmarksView, _View);
+  function BookmarksView() {
+    var _this;
+    _classCallCheck(this, BookmarksView);
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+    _this = _callSuper(this, BookmarksView, [].concat(args));
+    _defineProperty(_assertThisInitialized(_this), "_parentElement", document.querySelector('.bookmarks__list'));
+    _defineProperty(_assertThisInitialized(_this), "_erroMessage", 'No recipe found, please find something you like! 🥘');
+    _defineProperty(_assertThisInitialized(_this), "_message", '');
+    return _this;
+  }
+  _createClass(BookmarksView, [{
+    key: "_generateHTML",
+    value: function _generateHTML() {
+      return this._data.map(function (rec) {
+        var id = window.location.hash.slice(1);
+        return "\n             <li class=\"preview\">\n                <a class=\"preview__link ".concat(rec.id === id ? 'preview__link--active' : '', "\" href=\"#").concat(rec.id, "\">\n                  <figure class=\"preview__fig\">\n                    <img src=\"").concat(rec.imageUrl, "\" alt=").concat(rec.title, " />\n                  </figure>\n                  <div class=\"preview__data\">\n                    <h4 class=\"preview__title\">").concat(rec.title, "</h4>\n                    <p class=\"preview__publisher\">").concat(rec.publisher, "n</p>\n                  </div>\n                </a>\n              </li>\n        ");
+      }).join('');
+    }
+  }]);
+  return BookmarksView;
+}(_view.default);
+var _default = exports.default = new BookmarksView();
+},{"./view.js":"src/js/views/view.js"}],"node_modules/core-js/internals/global.js":[function(require,module,exports) {
 var global = arguments[3];
 'use strict';
 var check = function (it) {
@@ -18228,6 +18277,7 @@ var _recepieView = _interopRequireDefault(require("./views/recepieView.js"));
 var _serchingView = _interopRequireDefault(require("./views/serchingView.js"));
 var _resultsView = _interopRequireDefault(require("./views/resultsView.js"));
 var _paginationView = _interopRequireDefault(require("./views/paginationView.js"));
+var _bookmarkView = _interopRequireDefault(require("./views/bookmarkView.js"));
 require("core-js/stable");
 require("regenerator-runtime/runtime");
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -18263,19 +18313,20 @@ var controlRecipes = /*#__PURE__*/function () {
         case 8:
           // Inner HTML
           _recepieView.default.render(model.state.recipe);
+          _bookmarkView.default.update(model.state.bookmarks);
 
           // controlServings();
-          _context.next = 14;
+          _context.next = 15;
           break;
-        case 11:
-          _context.prev = 11;
+        case 12:
+          _context.prev = 12;
           _context.t0 = _context["catch"](0);
           _recepieView.default.renderError();
-        case 14:
+        case 15:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[0, 11]]);
+    }, _callee, null, [[0, 12]]);
   }));
   return function controlRecipes() {
     return _ref.apply(this, arguments);
@@ -18339,6 +18390,7 @@ var controlServings = function controlServings(servings) {
 var controlAddBookMarked = function controlAddBookMarked() {
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);else model.removeBookmark(model.state.recipe.id);
   _recepieView.default.update(model.state.recipe);
+  _bookmarkView.default.render(model.state.bookmarks);
   console.log(model.state.bookmarks);
 };
 var init = function init() {
@@ -18349,7 +18401,7 @@ var init = function init() {
   _paginationView.default.addHandlerClick(controlPagination);
 };
 init();
-},{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","./views/serchingView.js":"src/js/views/serchingView.js","./views/resultsView.js":"src/js/views/resultsView.js","./views/paginationView.js":"src/js/views/paginationView.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","./views/serchingView.js":"src/js/views/serchingView.js","./views/resultsView.js":"src/js/views/resultsView.js","./views/paginationView.js":"src/js/views/paginationView.js","./views/bookmarkView.js":"src/js/views/bookmarkView.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
