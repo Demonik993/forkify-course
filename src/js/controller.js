@@ -28,6 +28,7 @@ const controlRecipes = async function () {
     // controlServings();
   } catch (err) {
     recepieView.renderError();
+    console.error(err);
   }
 };
 
@@ -47,6 +48,7 @@ const controlSearchResults = async function () {
     paginationView.render(model.state.search);
   } catch (err) {
     recepieView.renderError();
+    console.error(err);
   }
 };
 // controlSearchResults();
@@ -71,6 +73,9 @@ const controlAddBookMarked = function () {
   recepieView.update(model.state.recipe);
   bookmarkView.render(model.state.bookmarks);
 };
+const controlBookmarks = function () {
+  bookmarkView.render(model.state.bookmarks);
+};
 
 const init = function () {
   recepieView.addHendlerRender(controlRecipes);
@@ -78,5 +83,6 @@ const init = function () {
   recepieView.addHandlerBookmark(controlAddBookMarked);
   serchingView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  bookmarkView.addHandlerLoad(controlBookmarks);
 };
 init();

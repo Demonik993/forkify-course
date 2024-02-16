@@ -300,12 +300,18 @@ var updateServings = exports.updateServings = function updateServings(numServing
   });
   state.recipe.servings = numServings;
 };
+var addBookmarksToLocalStorage = function addBookmarksToLocalStorage() {
+  localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+};
 var addBookmark = exports.addBookmark = function addBookmark(recipe) {
   //ADD BOOKMARK
   state.bookmarks.push(recipe);
 
   //MARK CURRENT RECIPE AS BOOKMARKED
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+
+  //local storage
+  addBookmarksToLocalStorage();
 };
 var removeBookmark = exports.removeBookmark = function removeBookmark(id) {
   //remove BOOKMARK
@@ -316,7 +322,14 @@ var removeBookmark = exports.removeBookmark = function removeBookmark(id) {
 
   //MARK CURRENT RECIPE AS not BOOKMARKED
   if (id === state.recipe.id) state.recipe.bookmarked = false;
+  addBookmarksToLocalStorage();
 };
+var init = function init() {
+  var storage = localStorage.getItem('bookmarks');
+  if (storage) state.bookmarks = JSON.parse(storage);
+};
+init();
+console.log(state.bookmarks);
 },{"./config":"src/js/config.js","./helpers":"src/js/helpers.js"}],"src/img/icons.svg":[function(require,module,exports) {
 module.exports = "/icons.ae3c38d5.svg";
 },{}],"src/js/views/view.js":[function(require,module,exports) {
@@ -1124,6 +1137,11 @@ var BookmarksView = /*#__PURE__*/function (_View) {
       return this._data.map(function (bookmark) {
         return _previewView.default.render(bookmark, false);
       }).join('');
+    }
+  }, {
+    key: "addHandlerLoad",
+    value: function addHandlerLoad(handler) {
+      window.addEventListener('load', handler);
     }
   }]);
   return BookmarksView;
@@ -18361,13 +18379,14 @@ var controlRecipes = /*#__PURE__*/function () {
           _bookmarkView.default.update(model.state.bookmarks);
 
           // controlServings();
-          _context.next = 15;
+          _context.next = 16;
           break;
         case 12:
           _context.prev = 12;
           _context.t0 = _context["catch"](0);
           _recepieView.default.renderError();
-        case 15:
+          console.error(_context.t0);
+        case 16:
         case "end":
           return _context.stop();
       }
@@ -18402,13 +18421,14 @@ var controlSearchResults = /*#__PURE__*/function () {
 
           //render pagination
           _paginationView.default.render(model.state.search);
-          _context2.next = 14;
+          _context2.next = 15;
           break;
         case 11:
           _context2.prev = 11;
           _context2.t0 = _context2["catch"](0);
           _recepieView.default.renderError();
-        case 14:
+          console.error(_context2.t0);
+        case 15:
         case "end":
           return _context2.stop();
       }
@@ -18437,12 +18457,16 @@ var controlAddBookMarked = function controlAddBookMarked() {
   _recepieView.default.update(model.state.recipe);
   _bookmarkView.default.render(model.state.bookmarks);
 };
+var controlBookmarks = function controlBookmarks() {
+  _bookmarkView.default.render(model.state.bookmarks);
+};
 var init = function init() {
   _recepieView.default.addHendlerRender(controlRecipes);
   _recepieView.default.addHendlerServings(controlServings);
   _recepieView.default.addHandlerBookmark(controlAddBookMarked);
   _serchingView.default.addHandlerSearch(controlSearchResults);
   _paginationView.default.addHandlerClick(controlPagination);
+  _bookmarkView.default.addHandlerLoad(controlBookmarks);
 };
 init();
 },{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","./views/serchingView.js":"src/js/views/serchingView.js","./views/resultsView.js":"src/js/views/resultsView.js","./views/paginationView.js":"src/js/views/paginationView.js","./views/bookmarkView.js":"src/js/views/bookmarkView.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
