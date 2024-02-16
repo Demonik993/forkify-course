@@ -4,6 +4,7 @@ import serchingView from './views/serchingView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
 import bookmarkView from './views/bookmarkView.js';
+import addRecipe from './views/addRecipe.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -17,14 +18,15 @@ const controlRecipes = async function () {
 
     //show spinner
     recepieView.spinner();
+    //update bookmark
     //update results list to markuppage
     resultsView.update(model.showSearchResults());
     // Load data
     await model.loadRecipe(key);
     // Inner HTML
     recepieView.render(model.state.recipe);
-    bookmarkView.update(model.state.bookmarks);
 
+    bookmarkView.update(model.state.bookmarks);
     // controlServings();
   } catch (err) {
     recepieView.renderError();
