@@ -26,16 +26,13 @@ class RecipeView extends View {
     this._parentElement.addEventListener('click', function (e) {
       const btn = e.target.closest('.btn--round');
       if (!btn) return;
-      console.log(btn);
       handler();
     });
   }
   _generateHTML() {
     return `
     <figure class="recipe__fig">
-    <img src=${this._data.imageUrl} alt=${
-      this._data.title
-    } class="recipe__img" />
+    <img src=${this._data.image} alt=${this._data.title} class="recipe__img" />
     <h1 class="recipe__title">
       <span>${this._data.title}</span>
     </h1>

@@ -23,7 +23,7 @@ export const loadRecipe = async function (key) {
       id: recipe.id,
       title: recipe.title,
       cookingTime: recipe.cooking_time,
-      imageUrl: recipe.image_url,
+      image: recipe.image_url,
       ingredients: recipe.ingredients,
       publisher: recipe.publisher,
       servings: recipe.servings,

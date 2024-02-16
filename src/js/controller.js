@@ -70,7 +70,6 @@ const controlAddBookMarked = function () {
   else model.removeBookmark(model.state.recipe.id);
   recepieView.update(model.state.recipe);
   bookmarkView.render(model.state.bookmarks);
-  console.log(model.state.bookmarks);
 };
 
 const init = function () {
