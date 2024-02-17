@@ -1161,6 +1161,12 @@ var _view = _interopRequireDefault(require("./view.js"));
 var _previewView = _interopRequireDefault(require("./previewView.js"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, _toPropertyKey(descriptor.key), descriptor); } }
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
@@ -1207,8 +1213,15 @@ var AddRecipeView = /*#__PURE__*/function (_View) {
       this._overlay.addEventListener('click', this._toggleClass.bind(this));
     }
   }, {
-    key: "_addHandlerSendForm",
-    value: function _addHandlerSendForm() {}
+    key: "addHandlerSendForm",
+    value: function addHandlerSendForm(handler) {
+      this._parentElement.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var dataArr = _toConsumableArray(new FormData(this)); //get form data
+        var data = Object.fromEntries(dataArr);
+        handler(data);
+      });
+    }
   }]);
   return AddRecipeView;
 }(_view.default);
@@ -18527,6 +18540,9 @@ var controlAddBookMarked = function controlAddBookMarked() {
 var controlBookmarks = function controlBookmarks() {
   _bookmarkView.default.render(model.state.bookmarks);
 };
+var addNewRecipe = function addNewRecipe(newRecipe) {
+  console.log(newRecipe);
+};
 var init = function init() {
   _recepieView.default.addHendlerRender(controlRecipes);
   _recepieView.default.addHendlerServings(controlServings);
@@ -18534,6 +18550,7 @@ var init = function init() {
   _serchingView.default.addHandlerSearch(controlSearchResults);
   _paginationView.default.addHandlerClick(controlPagination);
   _bookmarkView.default.addHandlerLoad(controlBookmarks);
+  _addRecipe.default.addHandlerSendForm(addNewRecipe);
 };
 init();
 },{"./model.js":"src/js/model.js","./views/recepieView.js":"src/js/views/recepieView.js","./views/serchingView.js":"src/js/views/serchingView.js","./views/resultsView.js":"src/js/views/resultsView.js","./views/paginationView.js":"src/js/views/paginationView.js","./views/bookmarkView.js":"src/js/views/bookmarkView.js","./views/addRecipe.js":"src/js/views/addRecipe.js","core-js/stable":"node_modules/core-js/stable/index.js","regenerator-runtime/runtime":"node_modules/regenerator-runtime/runtime.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
