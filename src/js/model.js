@@ -1,6 +1,6 @@
 // import {async} from 'regenerator-runtime'
-import { API_URL } from './config';
-import { getJSON } from './helpers';
+import { API_URL, KEY } from './config';
+import { getJSON, sendJSON } from './helpers';
 import { RES_PER_PAGE } from './config';
 
 export const state = {
@@ -102,6 +102,38 @@ const clearBookmark = function () {
   localStorage.clear('bookmarks');
 };
 // clearBookmark();
+
+export const uploadRecipe = async function (newRecipe) {
+  try {
+    const ingredients = Object.entries(newRecipe)
+      .filter(el => el[0].startsWith('ingredient') && el[1] !== '')
+      .map(el => {
+        const ingArr = el[1].replaceAll(' ', '').split(',');
+        if (ingArr.length !== 3)
+          throw new Error(
+            'Wrong ingredient format. Please use the correct format!'
+          );
+
+        const [quantity, unit, description] = ingArr;
+        return { quantity: quantity ? +quantity : null, unit, description };
+      });
+
+    const recipe = {
+      title: newRecipe.title,
+      cooking_time: +newRecipe.cookingTime,
+      image_url: newRecipe.image,
+      ingredients,
+      publisher: newRecipe.publisher,
+      servings: +newRecipe.servings,
+      source_url: newRecipe.sourceUrl,
+    };
+
+    const data = await sendJSON(`${API_URL}?key=${KEY}`, recipe);
+    console.log(data);
+  } catch (err) {
+    throw err;
+  }
+};
 const init = function () {
   const storage = localStorage.getItem('bookmarks');
   if (storage) state.bookmarks = JSON.parse(storage);

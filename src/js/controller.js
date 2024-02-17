@@ -25,6 +25,7 @@ const controlRecipes = async function () {
     await model.loadRecipe(key);
     // Inner HTML
     recepieView.render(model.state.recipe);
+    console.log(model.state.recipe);
 
     bookmarkView.update(model.state.bookmarks);
     // controlServings();
@@ -78,8 +79,14 @@ const controlAddBookMarked = function () {
 const controlBookmarks = function () {
   bookmarkView.render(model.state.bookmarks);
 };
-const addNewRecipe = function (newRecipe) {
-  console.log(newRecipe);
+const addNewRecipe = async function (newRecipe) {
+  try {
+    //UPLOAD NEW RECIPE
+    await model.uploadRecipe(newRecipe);
+  } catch (err) {
+    console.error(err);
+    addRecipe.renderError(err.message);
+  }
 };
 
 const init = function () {
