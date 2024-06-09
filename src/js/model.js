@@ -139,3 +139,8 @@ const init = function () {
   if (storage) state.bookmarks = JSON.parse(storage);
 };
 init();
+
+export const uploadNewRecipe = async function (newRecipe ){
+  const ingredients = Object.entries(newRecipe).filter(entry => entry[0].startsWith('ingredient')&&entry[1]!== "")
+  console.log(ingredients)
+}

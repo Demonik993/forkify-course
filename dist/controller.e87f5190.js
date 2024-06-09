@@ -232,7 +232,7 @@ var sendJSON = exports.sendJSON = /*#__PURE__*/function () {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.uploadRecipe = exports.updateServings = exports.state = exports.showSearchResults = exports.removeBookmark = exports.loadSearchResults = exports.loadRecipe = exports.addBookmark = void 0;
+exports.uploadRecipe = exports.uploadNewRecipe = exports.updateServings = exports.state = exports.showSearchResults = exports.removeBookmark = exports.loadSearchResults = exports.loadRecipe = exports.addBookmark = void 0;
 var _config = require("./config");
 var _helpers = require("./helpers");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -436,6 +436,26 @@ var init = function init() {
   if (storage) state.bookmarks = JSON.parse(storage);
 };
 init();
+var uploadNewRecipe = exports.uploadNewRecipe = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(newRecipe) {
+    var ingredients;
+    return _regeneratorRuntime().wrap(function _callee4$(_context4) {
+      while (1) switch (_context4.prev = _context4.next) {
+        case 0:
+          ingredients = Object.entries(newRecipe).filter(function (entry) {
+            return entry[0].startsWith('ingredient') && entry[1] !== "";
+          });
+          console.log(ingredients);
+        case 2:
+        case "end":
+          return _context4.stop();
+      }
+    }, _callee4);
+  }));
+  return function uploadNewRecipe(_x4) {
+    return _ref4.apply(this, arguments);
+  };
+}();
 },{"./config":"src/js/config.js","./helpers":"src/js/helpers.js"}],"src/img/icons.svg":[function(require,module,exports) {
 module.exports = "/icons.ae3c38d5.svg";
 },{}],"src/js/views/view.js":[function(require,module,exports) {
@@ -18653,18 +18673,19 @@ var addNewRecipe = /*#__PURE__*/function () {
           _context3.next = 3;
           return model.uploadRecipe(newRecipe);
         case 3:
-          _context3.next = 9;
+          model.uploadNewRecipe(newRecipe);
+          _context3.next = 10;
           break;
-        case 5:
-          _context3.prev = 5;
+        case 6:
+          _context3.prev = 6;
           _context3.t0 = _context3["catch"](0);
           console.error(_context3.t0);
           _addRecipe.default.renderError(_context3.t0.message);
-        case 9:
+        case 10:
         case "end":
           return _context3.stop();
       }
-    }, _callee3, null, [[0, 5]]);
+    }, _callee3, null, [[0, 6]]);
   }));
   return function addNewRecipe(_x) {
     return _ref3.apply(this, arguments);
@@ -18705,7 +18726,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57808" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37245" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -83,6 +83,8 @@ const addNewRecipe = async function (newRecipe) {
   try {
     //UPLOAD NEW RECIPE
     await model.uploadRecipe(newRecipe);
+    model.uploadNewRecipe(newRecipe)
+
   } catch (err) {
     console.error(err);
     addRecipe.renderError(err.message);
