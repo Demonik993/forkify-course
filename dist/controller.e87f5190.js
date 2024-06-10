@@ -444,6 +444,17 @@ var uploadNewRecipe = exports.uploadNewRecipe = /*#__PURE__*/function () {
         case 0:
           ingredients = Object.entries(newRecipe).filter(function (entry) {
             return entry[0].startsWith('ingredient') && entry[1] !== "";
+          }).map(function (ing) {
+            var _ing$1$replaceAll$spl = ing[1].replaceAll(' ', '').split(','),
+              _ing$1$replaceAll$spl2 = _slicedToArray(_ing$1$replaceAll$spl, 3),
+              quantity = _ing$1$replaceAll$spl2[0],
+              unit = _ing$1$replaceAll$spl2[1],
+              ingredient = _ing$1$replaceAll$spl2[2];
+            return {
+              quantity: quantity,
+              unit: unit,
+              ingredient: ingredient
+            };
           });
           console.log(ingredients);
         case 2:
@@ -18726,7 +18737,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "37245" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42389" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
